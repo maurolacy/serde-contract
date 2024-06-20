@@ -40,7 +40,7 @@ pub fn execute(
 #[cfg(test)]
 mod tests {
     use super::*;
-    use cosmwasm_std::testing::{mock_dependencies, mock_env, mock_info};
+    use cosmwasm_std::testing::{message_info, mock_dependencies, mock_env};
     use cosmwasm_std::Binary;
 
     const CREATOR: &str = "creator";
@@ -49,7 +49,7 @@ mod tests {
     fn instantiate_works() {
         let mut deps = mock_dependencies();
         let msg = InstantiateMsg {};
-        let info = mock_info(CREATOR, &[]);
+        let info = message_info(&deps.api.addr_make(CREATOR), &[]);
         let res = instantiate(deps.as_mut(), mock_env(), info, msg).unwrap();
         assert_eq!(0, res.messages.len());
     }
@@ -58,10 +58,11 @@ mod tests {
     fn execute_send_data_works() {
         let mut deps = mock_dependencies();
         let msg = ExecuteMsg::SendData {
-            binary: Some(Binary(b"my binary data".to_vec())),
+            binary: Some(Binary::new(b"my binary data".to_vec())),
             array: Some(b"my binary data".to_vec()),
         };
-        let res = execute(deps.as_mut(), mock_env(), mock_info("sender", &[]), msg).unwrap();
+        let mock_info = message_info(&deps.api.addr_make("sender"), &[]);
+        let res = execute(deps.as_mut(), mock_env(), mock_info, msg).unwrap();
         assert_eq!(0, res.messages.len());
     }
 
@@ -72,7 +73,8 @@ mod tests {
             binary: None,
             array: None,
         };
-        let res = execute(deps.as_mut(), mock_env(), mock_info("sender", &[]), msg).unwrap();
+        let mock_info = message_info(&deps.api.addr_make("sender"), &[]);
+        let res = execute(deps.as_mut(), mock_env(), mock_info, msg).unwrap();
         assert_eq!(0, res.messages.len());
     }
 
@@ -83,7 +85,8 @@ mod tests {
             binary: None,
             array: Some(vec![]),
         };
-        let res = execute(deps.as_mut(), mock_env(), mock_info("sender", &[]), msg).unwrap();
+        let mock_info = message_info(&deps.api.addr_make("sender"), &[]);
+        let res = execute(deps.as_mut(), mock_env(), mock_info, msg).unwrap();
         assert_eq!(0, res.messages.len());
     }
 
@@ -94,17 +97,19 @@ mod tests {
             binary: Some(vec![].into()),
             array: None,
         };
-        let res = execute(deps.as_mut(), mock_env(), mock_info("sender", &[]), msg).unwrap();
+        let mock_info = message_info(&deps.api.addr_make("sender"), &[]);
+        let res = execute(deps.as_mut(), mock_env(), mock_info, msg).unwrap();
         assert_eq!(0, res.messages.len());
     }
     #[test]
     fn execute_send_data_errors() {
         let mut deps = mock_dependencies();
         let msg = ExecuteMsg::SendData {
-            binary: Some(Binary(b"my binary data".to_vec())),
+            binary: Some(Binary::new(b"my binary data".to_vec())),
             array: Some(b"other binary data".to_vec()),
         };
-        let err = execute(deps.as_mut(), mock_env(), mock_info("sender", &[]), msg).unwrap_err();
+        let mock_info = message_info(&deps.api.addr_make("sender"), &[]);
+        let err = execute(deps.as_mut(), mock_env(), mock_info, msg).unwrap_err();
         assert_eq!(err, StdError::generic_err("Binary and array are not equal"));
     }
 }
