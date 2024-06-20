@@ -234,7 +234,7 @@ checksum = "101d0739564bd34cba9b84bf73665f0822487ae3b29b2dd59930608ed3aafd43"
 dependencies = [
  "cosmwasm-schema-derive",
  "schemars",
- "serde 1.0.200",
+ "serde",
  "serde_json",
  "thiserror",
 ]
@@ -265,7 +265,7 @@ dependencies = [
  "forward_ref",
  "hex",
  "schemars",
- "serde 1.0.200",
+ "serde",
  "serde-json-wasm",
  "sha2 0.10.8",
  "static_assertions",
@@ -289,7 +289,7 @@ dependencies = [
  "derivative",
  "hex",
  "schemars",
- "serde 1.0.200",
+ "serde",
  "serde_json",
  "sha2 0.10.8",
  "strum",
@@ -476,7 +476,7 @@ checksum = "f13360e9007f51998d42b1bc6b7fa0141f74feae61ed5fd1e5b0a89eec7b5de1"
 dependencies = [
  "cosmwasm-std",
  "schemars",
- "serde 1.0.200",
+ "serde",
 ]
 
 [[package]]
@@ -490,7 +490,7 @@ dependencies = [
  "cw-storage-plus",
  "schemars",
  "semver",
- "serde 1.0.200",
+ "serde",
  "thiserror",
 ]
 
@@ -639,7 +639,7 @@ dependencies = [
  "hashbrown 0.12.3",
  "hex",
  "rand_core 0.6.4",
- "serde 1.0.200",
+ "serde",
  "sha2 0.9.9",
  "zeroize",
 ]
@@ -1261,7 +1261,7 @@ checksum = "7f55c82c700538496bdc329bb4918a81f87cc8888811bd123cf325a0f2f8d309"
 dependencies = [
  "dyn-clone",
  "schemars_derive",
- "serde 1.0.200",
+ "serde",
  "serde_json",
 ]
 
@@ -1316,7 +1316,7 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "92d43fe69e652f3df9bdc2b85b2854a0825b86e4fb76bc44d945137d053639ca"
 
 [[package]]
-name = "serde"
+name = "ser-de"
 version = "0.0.1"
 dependencies = [
  "cosmwasm-schema",
@@ -1341,7 +1341,7 @@ version = "1.0.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "f05da0d153dd4595bdffd5099dc0e9ce425b205ee648eb93437ff7302af8c9a5"
 dependencies = [
- "serde 1.0.200",
+ "serde",
 ]
 
 [[package]]
@@ -1351,7 +1351,7 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "e3b4c031cd0d9014307d82b8abf653c0290fbdaeb4c02d00c63cf52f728628bf"
 dependencies = [
  "js-sys",
- "serde 1.0.200",
+ "serde",
  "wasm-bindgen",
 ]
 
@@ -1385,7 +1385,7 @@ checksum = "3e17db7126d17feb94eb3fad46bf1a96b034e8aacbc2e775fe81505f8b0b2813"
 dependencies = [
  "itoa",
  "ryu",
- "serde 1.0.200",
+ "serde",
 ]
 
 [[package]]
@@ -1697,7 +1697,7 @@ dependencies = [
  "js-sys",
  "more-asserts",
  "rustc-demangle",
- "serde 1.0.200",
+ "serde",
  "serde-wasm-bindgen",
  "shared-buffer",
  "target-lexicon",
