@@ -101,6 +101,7 @@ mod tests {
         let res = execute(deps.as_mut(), mock_env(), mock_info, msg).unwrap();
         assert_eq!(0, res.messages.len());
     }
+
     #[test]
     fn execute_send_data_errors() {
         let mut deps = mock_dependencies();
