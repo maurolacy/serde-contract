@@ -18,7 +18,12 @@ pub fn instantiate(
 }
 
 #[cfg_attr(not(feature = "library"), entry_point)]
-pub fn execute(_deps: DepsMut, _env: Env, msg: ExecuteMsg) -> StdResult<Response> {
+pub fn execute(
+    _deps: DepsMut,
+    _env: Env,
+    _info: MessageInfo,
+    msg: ExecuteMsg,
+) -> StdResult<Response> {
     match msg {
         ExecuteMsg::SendData { binary, array } => {
             let bin = binary.unwrap_or_default();
