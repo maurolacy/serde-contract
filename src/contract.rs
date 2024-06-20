@@ -36,6 +36,7 @@ pub fn execute(_deps: DepsMut, _env: Env, msg: ExecuteMsg) -> StdResult<Response
 mod tests {
     use super::*;
     use cosmwasm_std::testing::{mock_dependencies, mock_env, mock_info};
+    use cosmwasm_std::Binary;
 
     const CREATOR: &str = "creator";
 
@@ -46,5 +47,59 @@ mod tests {
         let info = mock_info(CREATOR, &[]);
         let res = instantiate(deps.as_mut(), mock_env(), info, msg).unwrap();
         assert_eq!(0, res.messages.len());
+    }
+
+    #[test]
+    fn execute_send_data_works() {
+        let mut deps = mock_dependencies();
+        let msg = ExecuteMsg::SendData {
+            binary: Some(Binary(b"my binary data".to_vec())),
+            array: Some(b"my binary data".to_vec()),
+        };
+        let res = execute(deps.as_mut(), mock_env(), msg).unwrap();
+        assert_eq!(0, res.messages.len());
+    }
+
+    #[test]
+    fn execute_send_data_empty() {
+        let mut deps = mock_dependencies();
+        let msg = ExecuteMsg::SendData {
+            binary: None,
+            array: None,
+        };
+        let res = execute(deps.as_mut(), mock_env(), msg).unwrap();
+        assert_eq!(0, res.messages.len());
+    }
+
+    #[test]
+    fn execute_send_data_no_binary() {
+        let mut deps = mock_dependencies();
+        let msg = ExecuteMsg::SendData {
+            binary: None,
+            array: Some(vec![]),
+        };
+        let res = execute(deps.as_mut(), mock_env(), msg).unwrap();
+        assert_eq!(0, res.messages.len());
+    }
+
+    #[test]
+    fn execute_send_data_no_array() {
+        let mut deps = mock_dependencies();
+        let msg = ExecuteMsg::SendData {
+            binary: Some(vec![].into()),
+            array: None,
+        };
+        let res = execute(deps.as_mut(), mock_env(), msg).unwrap();
+        assert_eq!(0, res.messages.len());
+    }
+    #[test]
+    fn execute_send_data_errors() {
+        let mut deps = mock_dependencies();
+        let msg = ExecuteMsg::SendData {
+            binary: Some(Binary(b"my binary data".to_vec())),
+            array: Some(b"other binary data".to_vec()),
+        };
+        let err = execute(deps.as_mut(), mock_env(), msg).unwrap_err();
+        assert_eq!(err, StdError::generic_err("Binary and array are not equal"));
     }
 }
