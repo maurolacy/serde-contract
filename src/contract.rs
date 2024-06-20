@@ -61,7 +61,7 @@ mod tests {
             binary: Some(Binary(b"my binary data".to_vec())),
             array: Some(b"my binary data".to_vec()),
         };
-        let res = execute(deps.as_mut(), mock_env(), msg).unwrap();
+        let res = execute(deps.as_mut(), mock_env(), mock_info("sender", &[]), msg).unwrap();
         assert_eq!(0, res.messages.len());
     }
 
@@ -72,7 +72,7 @@ mod tests {
             binary: None,
             array: None,
         };
-        let res = execute(deps.as_mut(), mock_env(), msg).unwrap();
+        let res = execute(deps.as_mut(), mock_env(), mock_info("sender", &[]), msg).unwrap();
         assert_eq!(0, res.messages.len());
     }
 
@@ -83,7 +83,7 @@ mod tests {
             binary: None,
             array: Some(vec![]),
         };
-        let res = execute(deps.as_mut(), mock_env(), msg).unwrap();
+        let res = execute(deps.as_mut(), mock_env(), mock_info("sender", &[]), msg).unwrap();
         assert_eq!(0, res.messages.len());
     }
 
@@ -94,7 +94,7 @@ mod tests {
             binary: Some(vec![].into()),
             array: None,
         };
-        let res = execute(deps.as_mut(), mock_env(), msg).unwrap();
+        let res = execute(deps.as_mut(), mock_env(), mock_info("sender", &[]), msg).unwrap();
         assert_eq!(0, res.messages.len());
     }
     #[test]
@@ -104,7 +104,7 @@ mod tests {
             binary: Some(Binary(b"my binary data".to_vec())),
             array: Some(b"other binary data".to_vec()),
         };
-        let err = execute(deps.as_mut(), mock_env(), msg).unwrap_err();
+        let err = execute(deps.as_mut(), mock_env(), mock_info("sender", &[]), msg).unwrap_err();
         assert_eq!(err, StdError::generic_err("Binary and array are not equal"));
     }
 }
