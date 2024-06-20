@@ -1,0 +1,41 @@
+[package]
+name          = "serde"
+edition       = "2021"
+version       = "0.0.1"
+license       = "Apache-2.0"
+repository    = "https://github.com/babylonchain/babylon-contract"
+authors       = ["Mauro Lacy <mauro@babylonchain.io>"]
+publish       = false
+description   = "CosmWasm contract serde PoC"
+
+resolver  = "2"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[lib]
+crate-type = ["cdylib", "rlib"]
+
+[features]
+# Add feature "cranelift" to default if you need 32 bit or ARM support
+default = []
+# for quicker tests, cargo test --lib
+# for more explicit tests, cargo test --features=backtraces
+backtraces = ["cosmwasm-std/backtraces"]
+library = []
+
+[dependencies]
+cosmwasm-schema   = "1.5.2"
+cosmwasm-std      = { version = "1.5.2", features = ["iterator"] }
+cw2               = "1.1.2"
+cw-storage-plus   = "1.2.0"
+
+[profile.release]
+codegen-units     = 1
+debug             = false
+debug-assertions  = false
+lto               = true
+panic             = 'abort'
+rpath             = false
+opt-level         = 3
+overflow-checks   = true
+incremental       = false
