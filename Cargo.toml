@@ -22,6 +22,9 @@ default = []
 # for more explicit tests, cargo test --features=backtraces
 library = []
 
+[package.metadata.scripts]
+optimize          = "./scripts/optimizer.sh"
+
 [dependencies]
 cosmwasm-schema   = "2.0.4"
 cosmwasm-std      = { version = "2.0.4", features = ["iterator"] }
